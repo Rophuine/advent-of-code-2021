@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
-import data from './Day1Sample';
+import {readFileSync} from 'fs';
+
+const data = readFileSync('./Day1Data.txt', 'ascii').split(/\W+/).map(t => parseInt(t));
 
 interface IArrayState {
     previous: number[];
