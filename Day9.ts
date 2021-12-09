@@ -23,20 +23,20 @@ const allPositions = _.range(0, rows).flatMap(r => _.range(0, cols).map(c => ({r
 const lowestPoints = allPositions.filter(allAdjacentsAreHigher);
 console.log("Stage 1: " + _.sum(lowestPoints.map(p => data[p.row][p.col]+1)));
 
-enum map { highPoint, unvisited, visited};
-const basinMap: map[] = data.flatMap(row => row.map(depth => depth == 9 ? map.highPoint : map.unvisited));
+enum spot { highPoint, unvisited, visited};
+const basinMap: spot[] = data.flatMap(row => row.map(depth => depth == 9 ? spot.highPoint : spot.unvisited));
 const index = (position: position) => position.row * cols + position.col;
 const position = (index: number) => ({row: Math.floor(index / cols), col: index % cols});
 
 const basinSizes: number[] = [];
-while (basinMap.some(d => d == map.unvisited)) {
-    let indexQueue = [basinMap.findIndex(s => s == map.unvisited)];
+while (basinMap.some(d => d == spot.unvisited)) {
+    let indexQueue = [basinMap.findIndex(s => s == spot.unvisited)];
     let basinSize = 0;
     while (indexQueue.length > 0) {
-        if (basinMap[indexQueue[0]] == map.unvisited) {
+        if (basinMap[indexQueue[0]] == spot.unvisited) {
             basinSize++;
-            basinMap[indexQueue[0]] = map.visited;
-            const newSpots = adjacentPoints(position(indexQueue[0])).filter(p => basinMap[index(p)] == map.unvisited);
+            basinMap[indexQueue[0]] = spot.visited;
+            const newSpots = adjacentPoints(position(indexQueue[0])).filter(p => basinMap[index(p)] == spot.unvisited);
             indexQueue = [...indexQueue.slice(1), ...newSpots.map(index)];
         }
         else
