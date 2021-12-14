@@ -26,7 +26,7 @@ const getAllPaths = (canVisitFunction) => {
     while (paths.some(p => p[p.length-1] != 'end')) {
         paths = paths.flatMap((path) : string[][] => {
             if (path[path.length-1] == 'end') return [path];
-            return pathsFromNode[path[path.length-1]].filter(n => canVisitFunction(path, n)).map(n => [...path, n]);//?
+            return pathsFromNode[path[path.length-1]].filter(n => canVisitFunction(path, n)).map(n => [...path, n]);
         });
     }
     return paths;
